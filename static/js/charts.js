@@ -4,7 +4,7 @@ function init() {
     var selector = d3.select("#selDataset");
   
     // Use the list of sample names to populate the select options
-    d3.json("samples.json").then((data) => {
+    d3.json("static/samples.json").then((data) => {
       var sampleNames = data.names;
   
       sampleNames.forEach((sample) => {
@@ -33,7 +33,7 @@ function init() {
   
   // Demographics Panel 
   function buildMetadata(sample) {
-    d3.json("samples.json").then((data) => {
+    d3.json("static/samples.json").then((data) => {
       var metadata = data.metadata;
       // Filter the data for the object with the desired sample number
       var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
@@ -57,7 +57,7 @@ function init() {
   // 1. Create the buildCharts function.
     function buildCharts(sample) {
     // 2. Use d3.json to load and retrieve the samples.json file 
-    d3.json("samples.json").then((data) => {
+    d3.json("static/samples.json").then((data) => {
       // 3. Create a variable that holds the samples array. 
       var samples = data.samples;
       // 4. Create a variable that filters the samples for the object with the desired sample number.
@@ -94,6 +94,9 @@ function init() {
       // 9. Create the layout for the bar chart. 
       var barLayout = {
         title: "Top 10 Bacteria Cultures Found in Subject",
+        margin: { t: 30, 1: 150},
+        paper_bgcolor: "aliceblue",
+        plot_bgcolor: "aliceblue"
       };
       // 10. Use Plotly to plot the data with the layout. 
       Plotly.newPlot("bar", barData, barLayout);
@@ -109,7 +112,8 @@ function init() {
           mode: "markers",
           marker: {
             color: ids,
-            size: values 
+            size: values, 
+            colorscale: "viridis"
           }
         }
       ];
@@ -121,7 +125,9 @@ function init() {
                   titlefont: {
                     family: 'Georgia, serif',
                     size: 18,
-                    color: 'fuchsia'
+                    colorscale: "blue",
+                    paper_bgcolor: "aliceblue",
+                    plot_bgcolor: "aliceblue"
                   }
                 },
         hovermode: 'closest',
@@ -144,24 +150,21 @@ function init() {
         type: "indicator",
         mode: "gauge+number",
         gauge: {
-          axis: { range: [null, 9] },
+          axis: { range: [null, 10] },
+          bar: {color: "black"},
           steps: [
-            { range: [0, 1], color: "mistyrose" },
-            { range: [1, 2], color: "lightpink" },
-            { range: [2, 3], color: "hotpink" },
-            { range: [3, 4], color: "violet" },
-            { range: [4, 5], color: "plum" },
-            { range: [5, 6], color: "mediumorchid" },
-            { range: [6, 7], color: "purple" },
-            { range: [7, 8], color: "mediumpurple" },
-            { range: [8, 9], color: "slateblue" },
+            { range: [0, 2], color: "lightgreen" },
+            { range: [2, 4], color: "palegreen" },
+            { range: [4, 6], color: "mediumspringgreen" },
+            { range: [6, 8], color: "green" },
+            { range: [8, 10], color: "darkgreen" },
           ]
         }
       }
       ];
       
       //Create the layout for the gauge chart.
-      var gaugeLayout = { width: 400, height: 400, margin: { t: 0, b: 0} };
+      var gaugeLayout = { width: 400, height: 400, margin: { t: 0, b: 0}, paper_bgcolor: "aliceblue", plot_bgcolor: "aliceblue" };
   
       // 6. Use Plotly to plot the gauge data and layout.
       Plotly.newPlot("gauge", gaugeData, gaugeLayout);
