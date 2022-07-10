@@ -3,3 +3,5 @@ fetch("static/samples.json")
     return response.json();
 })
 .then(jsondata => console.log(jsondata));
+
+d3.json("static/samples.json")
